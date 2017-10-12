@@ -3,3 +3,22 @@
 	对于任意两个数 n1和n2 看n1+n2和n2+n1的词典序
 然后直接相加得结果
 
+
+474 Ones and Zeroes
+类似 0 1 背包问题的问题
+
+int solve(vector<string> &strs, int m, int n) {
+    vector<vector<int>> rsts(m + 1, vector<int>(n + 1));
+    for (auto &s:strs) {
+        int zeros = count(s.begin(), s.end(), '0');
+        int ones = s.size() - zeros;
+        for (int r = m; r >= zeros; r--)
+            for (int c = n; c >= ones; c--)
+                if (rsts[r - zeros][c - ones] + 1 > rsts[r][c])
+                    rsts[r][c] = rsts[r - zeros][c - ones] + 1;
+    }
+    return rsts[m][n];
+}
+
+使用了动态规划的方法。更多的串的问题可以利用较少字符串的问题的结果。要看当前字符串能不能利用，就看对于每个r,c rsts[r][c]能不能变成rsts[r-zeros][c-ones]+1 这里从右下角往左上角进行改变，因为正向顺序会让一个字符串使结果改变两次。
+如果要用正向顺序，要复制一份，再复制回去。
