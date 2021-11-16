@@ -37,3 +37,18 @@ MYVAR is hi there
 hi there
 ```
 
+## 转义
+大部分字符比如*和'不会被解释。
+```shell
+echo "*"
+# prints *
+echo "'"
+# prints '
+```
+但是有些字符仍然会被解释，就算在双引号中 "$`\
+
+## for
+for的次数不一定等于元素数，比如*号会把文件遍历一遍
+
+
+
