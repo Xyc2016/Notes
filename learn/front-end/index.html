@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    * {
+        /* box-sizing: border-box; */
+        transition: all 3500ms;
+-o-transition: all 3500ms;
+-moz-transition: all 3500ms;
+-webkit-transition: all 3500ms;
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(0)
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    body {
+        /* background-color: green; */
+    }
+
+    .learn-before-and-after {
+        background-color: gray;
+        border: solid 10px;
+    }
+    .learn-before-and-after::first-line {
+        text-transform: capitalize;
+    }
+    .learn-before-and-after::before {
+        content: "??";
+        color: aqua;
+    }
+    .learn-before-and-after::after {
+        content: "After";
+        color: aquamarine;
+    }
+    blockquote::before {
+        content: open-quote;
+    }
+    blockquote::after {
+        content: close-quote;
+    }
+    blockquote:hover::after {
+        background-color: aqua;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="learn-before-and-after">
+        <br><br><br><br><br>
+    </div>
+    <blockquote>
+        fsfes
+    </blockquote>
+</body>
+
+</html>
