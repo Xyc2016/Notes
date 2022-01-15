@@ -110,6 +110,7 @@ echo $VAR_FOR_READ
 ```
 
 类似于其它语言中的while true，sh里的一般用while :实现无限循环循环。因为冒号为真值。
+用type看了一下，冒号是个命令，不是语法。
 ```
 #!/bin/sh
 while :
@@ -173,16 +174,6 @@ root@36d8ae52a493:/scripts# type [
 用[来判断的时候，后面要加空格。
 
 if else的一般形式
-
-```sh
-#!/bin/sh
-if [ -f "$X" ]; then
-echo "File $X exists"
-else
-    echo "not exists"
-fi
-```
-或者
 ```
 #!/bin/sh
 if [ -f "$X" ]
@@ -191,8 +182,19 @@ echo "File $X exists"
 else
     echo "not exists"
 fi
+```
+或者
+```sh
+#!/bin/sh
+if [ -f "$X" ]; then
+echo "File $X exists"
+else
+    echo "not exists"
+fi
 
 ```
+
+这种方式，用`;`来代替换行。
 
 或者这样写，简写形式的if else
 
@@ -205,4 +207,40 @@ fi
 ```
 
 && 后面写上正确时执行的语句。|| 后面写上错误时执行的语句。
+这种方式，用`\`来告诉shell这不是一行的末尾。
 
+在shell里，大于小于号被用来做重定向。所以比较用的是-lt -gt -le -ge几个符号。
+
+## variable 2
+
+```
+在脚本里，用$0表示脚本的名字
+用$1,$2,$3表示第一个第二个第三个参数，以此类推。
+$#表示参数的数量，无参数为0，所以文件名是不算参数数的。
+$?表示上一个命令的值。$$表示pid,$IFS表示内部字段分割符
+```
+
+## variable 3
+
+:-表示默认值
+${myname:- `whoami`}
+表示myname如果这个变量空值，用`whoami`, 否则用myname
+
+```
+root@36d8ae52a493:/scripts# varA=the_var_a ./demo.sh 
+the_var_a
+root@36d8ae52a493:/scripts# ./demo.sh 
+DEFAULT_VALUE
+```
+
+## external programs
+
+反引号表示或者程序的标准输出
+```
+LS_OUT=`ls`
+echo $LS_OUT
+```
+prints
+```
+a_file demo.sh empty.txt learn_mkdir myfile.txt
+```
