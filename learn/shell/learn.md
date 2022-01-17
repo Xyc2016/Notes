@@ -206,6 +206,8 @@ fi
     echo "not exists"
 ```
 
+shell 的用elif 表示else if
+
 && 后面写上正确时执行的语句。|| 后面写上错误时执行的语句。
 这种方式，用`\`来告诉shell这不是一行的末尾。
 
@@ -236,11 +238,20 @@ DEFAULT_VALUE
 ## external programs
 
 反引号表示或者程序的标准输出
-```
+
+```sh
 LS_OUT=`ls`
 echo $LS_OUT
 ```
+
 prints
-```
+
+```log
 a_file demo.sh empty.txt learn_mkdir myfile.txt
 ```
+
+## Function
+
+和其它编程语言中的函数类似。
+shell中的函数，可以在定义它的脚本文件中使用，也可以source一个脚本，导出里面的函数，使用它。
+
