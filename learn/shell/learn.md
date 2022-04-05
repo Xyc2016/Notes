@@ -3,6 +3,7 @@
 shell 在export变量的时候， 会把变量传给子进程。但是子进程不会更改原来的shell中的变量
 
 demo.sh
+
 ```sh
 #!/bin/sh
 
@@ -16,7 +17,9 @@ export MYVAR=1
 ./demo.sh
 echo $MYVAR
 ```
+
 prints
+
 ```
 MYVAR is: 1
 MYVAR is hi there
@@ -25,12 +28,15 @@ MYVAR is hi there
 ```
 
 但是，source一个sh script 就可以让脚本对变量的修改应用到原来的shell。也没必要export
+
 ```sh
 MYVAR=1
 . ./demo.sh
 echo $MYVAR
 ```
+
 prints
+
 ```shell
 MYVAR is: 1
 MYVAR is hi there
@@ -38,16 +44,20 @@ hi there
 ```
 
 ## 转义
+
 大部分字符比如*和'不会被解释。
+
 ```shell
 echo "*"
 # prints *
 echo "'"
 # prints '
 ```
+
 但是有些字符仍然会被解释，就算在双引号中 "$`\
 
 ## for
+
 for的次数不一定等于元素数，比如*号会把文件遍历一遍
 
 试了一下，for迭代的元素用空格隔开，跟python相似。但是后面不用跟冒号。
@@ -60,7 +70,9 @@ do
     echo "i = $i"
 done
 ```
+
 结果是
+
 ```
 i = hello
 i = a
@@ -75,7 +87,9 @@ do
     echo "i = $i"
 done
 ```
+
 结果是
+
 ```
 i = hello
 i = _a
@@ -83,6 +97,7 @@ i = a_file
 i = demo.sh
 i = _aa
 ```
+
 因为星号是通配符，这里会迭代当前目录里的文件
 
 ## while
@@ -111,6 +126,7 @@ echo $VAR_FOR_READ
 
 类似于其它语言中的while true，sh里的一般用while :实现无限循环循环。因为冒号为真值。
 用type看了一下，冒号是个命令，不是语法。
+
 ```
 #!/bin/sh
 while :
@@ -164,16 +180,19 @@ read返回了1。表示出错。
 后来打印了一下a，a为demo.sh的第一行。
 
 ## Test
+
 以前以为 方括号是sh语法。原来"["是一个命令。
 
 ```
 root@36d8ae52a493:/scripts# type [
 [ is a shell builtin
 ```
+
 教程上表示，"["是指向test的（我在ubuntu里试了一下，看起来不是，但是[是/use/bin里的一个文件）。
 用[来判断的时候，后面要加空格。
 
 if else的一般形式
+
 ```
 #!/bin/sh
 if [ -f "$X" ]
@@ -183,7 +202,9 @@ else
     echo "not exists"
 fi
 ```
+
 或者
+
 ```sh
 #!/bin/sh
 if [ -f "$X" ]; then
@@ -254,4 +275,17 @@ a_file demo.sh empty.txt learn_mkdir myfile.txt
 
 和其它编程语言中的函数类似。
 shell中的函数，可以在定义它的脚本文件中使用，也可以source一个脚本，导出里面的函数，使用它。
+
+在脚本中，使用exit，就可以让整个脚本终止运行
+
+在脚本中打印的文本，可以在外面被捕获。比如
+
+```bash
+c=`./learn_func.sh`
+echo $c
+```
+
+这时c的值为脚本中打印的内容。
+
+把脚本中的函数调用，通过管道传给tee是个坑。因为这会启动一个新的进程，从而导致和没通过管道传给tee的结果不同。
 
